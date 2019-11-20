@@ -10,9 +10,9 @@ With this intruder detection script, the device will check if somebody is inside
 
 To build this device you need:
 
-- Raspberry Pi (3+)
+- Raspberry Pi (3 or +)
 
-- PiCam or USB Webcam (i'm using a standard CSI camera connector PiCam)
+- PiCam (i'm using a <10€ standard CSI camera connector PiCam)
 
 - PIR Sensor (i'm using this one -> https://www.elecfreaks.com/estore/pir-sensor-brick.html)
 
