@@ -3,6 +3,7 @@ import time
 import telepot
 from picamera import PiCamera
 import RPi.GPIO as GPIO
+import subprocess
 
 camera = PiCamera()
 camera.rotation = 180
@@ -16,7 +17,7 @@ enabled = False
 def handle(msg):
     global enabled
     global intruder
-    
+
     command = msg['text']
     from_id = msg['from']['id']
     #chat_id = msg['chat']['id']
@@ -35,7 +36,11 @@ def handle(msg):
     		bot.sendMessage(chat_id,text="PIR enabled")
     	if command.lower() == "disable pir":
     		enabled = False
-    		bot.sendMessage(chat_id,text="PIR disabled")
+    		bot.sendMessage(chat_id,text="PIR disabled"
+    	if command.lower().split(' ')[0]=='say':
+		# not using the espeak python module due to raspberry pi and alsa compatibility problems
+        	command = "espeak -ves \""+command[3:]+"\" --stdout|aplay" # remove or change -ves (spanish text) option to change the language
+        	process = subprocess.Popen(command,shell=True, executable='/bin/bash')
     else:
     	bot.sendMessage(from_id,text="I'm not allowed to talk with you, sorry")
     	bot.sendMessage(chat_id,text="Somebody is trying to use the chatbot")

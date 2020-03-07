@@ -18,6 +18,8 @@ To build this device you need:
 
 - Telegram app
 
+- Optional: speaker
+
 ## Basic building instructions
 
 - Install raspbian distro, with Python3 and Telepot and PiCamera modules using pip3 or apt 
@@ -25,6 +27,8 @@ To build this device you need:
 - Install Telegram and create a bot using BotFather and following the instructions
 
 - Install PiCam and PIR Sensor (Passive InfraRed presence sensor) hardware on your Raspberry Pi
+
+- Install espeak (sudo apt-get install espeak)
 
 - Check if all is working separately
 
@@ -45,3 +49,5 @@ To build this device you need:
 - **disable pir**: if PIR sensor is disabled, never takes a picture automatically (when you are at home, PIR sensor must be disabled to avoid a picture flood) 
 
 - **show**: take a real-time picture and send it to the telegram bot channel 
+
+- **say TEXT** : read the TEXT string through the speaker
