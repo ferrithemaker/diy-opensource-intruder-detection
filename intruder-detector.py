@@ -36,7 +36,7 @@ def handle(msg):
     		bot.sendMessage(chat_id,text="PIR enabled")
     	if command.lower() == "disable pir":
     		enabled = False
-    		bot.sendMessage(chat_id,text="PIR disabled"
+    		bot.sendMessage(chat_id,text="PIR disabled")
     	if command.lower().split(' ')[0]=='say':
 		# not using the espeak python module due to raspberry pi and alsa compatibility problems
         	command = "espeak -ves \""+command[3:]+"\" --stdout|aplay" # remove or change -ves (spanish text) option to change the language
