@@ -1,13 +1,21 @@
 
+picam = False
+
+if picam:
+	from picamera import PiCamera
+else:
+	import cv2
 import time
 import telepot
-from picamera import PiCamera
 import RPi.GPIO as GPIO
 import subprocess
 
-camera = PiCamera()
-camera.rotation = 180
 
+
+if picam:
+	camera = PiCamera()
+	camera.rotation = 180
+	
 GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BOARD)
 GPIO.setup(11,GPIO.IN)
@@ -24,10 +32,16 @@ def handle(msg):
     #print 'Got command: %s' % command
     if from_id == 0000000: # your id from Telegram
     	if command.lower() == 'show':
-        	camera.start_preview()
-        	time.sleep(5)
-        	camera.capture('/home/pi/image.jpg')
-        	camera.stop_preview()
+        	if picam:
+				camera.start_preview()
+				time.sleep(5)
+				camera.capture('/home/pi/image.jpg')
+				camera.stop_preview()
+			else:
+				camera = cv2.VideoCapture(0)
+				return_value, image = camera.read()
+				cv2.imwrite('/home/pi/image.jpg', image)
+				del(camera)
         	inf = open('/home/pi/image.jpg', 'rb')
         	#bot.sendMessage(chat_id,text="Done!")
         	bot.sendPhoto(chat_id,inf)
@@ -54,10 +68,16 @@ while 1:
     pirvalue = GPIO.input(11)
     if pirvalue == 1 and intruder == False and enabled == True:
         intruder = True
-        camera.start_preview()
-        time.sleep(5)
-        camera.capture('/home/pi/image.jpg')
-        camera.stop_preview()
+        if picam:
+			camera.start_preview()
+			time.sleep(5)
+			camera.capture('/home/pi/image.jpg')
+			camera.stop_preview()
+		else:
+			camera = cv2.VideoCapture(0)
+			return_value, image = camera.read()
+			cv2.imwrite('/home/pi/image.jpg', image)
+			del(camera)
         inf = open('/home/pi/image.jpg')
         bot.sendPhoto(chat_id,inf)
     if pirvalue == 0:
